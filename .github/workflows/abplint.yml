@@ -4,27 +4,19 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # windows-latest | macos-latest
-    name: Test changed-files
+    runs-on: ubuntu-latest
+    name: Retrieve the preceding commit
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+          fetch-depth: 0
 
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v14.6
 
-      - name: List all changed files
-        run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
-          done
       - name: abaplint
         uses: valeriast/actions-abaplint@main
-      # GITHUB_TOKEN in forked repositories is read-only
-      # https://help.github.com/en/actions/reference/events-that-trigger-workflows#pull-request-event-pull_request
-      # if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHANGEDFILES: ${{ steps.changed-files.outputs.all_changed_files }}
