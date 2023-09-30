@@ -57,7 +57,7 @@ CLASS zcl_adu_gos IMPLEMENTATION.
 
   METHOD create_for_object.
 
-    result = NEW zcl_adu_gos( is_object ).
+    result = NEW zcl_adu_gos( is_object )  .
 
   ENDMETHOD.
 
@@ -85,7 +85,7 @@ CLASS zcl_adu_gos IMPLEMENTATION.
 
       DATA(ls_attachment) =
         VALUE gos_s_attcont(
-            atta_cat  = cl_gos_api=>c_msg
+            atta_cat    = cl_gos_api=>c_msg
             filename  = ls_file-filename
             descr     = ls_file-description
             tech_type = split_file_name_extension( ls_file-filename )-extension
@@ -110,7 +110,7 @@ CLASS zcl_adu_gos IMPLEMENTATION.
 
 
   METHOD zif_adu_gos~get_attachment_list.
-
+    data: teste type i.
     result = get_api( )->get_atta_list( ).
 
   ENDMETHOD.
