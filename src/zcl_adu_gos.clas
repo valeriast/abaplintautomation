@@ -10,6 +10,8 @@ CLASS zcl_adu_gos DEFINITION
         is_object     TYPE gos_s_obj
       RETURNING
         VALUE(result) TYPE REF TO zif_adu_gos
+
+
       RAISING
         cx_gos_api.
 
