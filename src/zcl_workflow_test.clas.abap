@@ -22,6 +22,9 @@ CLASS ZCL_WORKFLOW_TEST IMPLEMENTATION.
     TRY.
         DATA(cpwf_api) = cl_swf_cpwf_api_factory_a4c=>get_api_instance( ).
 
+
+
+
         DATA(wf_def) = cpwf_api->get_workflow_definitions( ).
         out->write( `Definitions:` ).
         out->write( wf_def ).
