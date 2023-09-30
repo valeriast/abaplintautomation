@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   lint:
-    runs-on: [self-hosted, solinas]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout (fetch last two commits) of the PR
         uses: actions/checkout@v3
