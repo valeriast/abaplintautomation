@@ -3,7 +3,7 @@ CLASS zcl_adu_general DEFINITION
   FINAL
   CREATE PUBLIC .
 
-  PUBLIC SECTION.
+  PUBLIC SECTION  .
 
     CLASS-METHODS get_instance
       RETURNING
