@@ -7,6 +7,8 @@ CLASS zcl_adu_gos DEFINITION
 
     CLASS-METHODS create_for_object
       IMPORTING
+
+
         is_object     TYPE gos_s_obj
       RETURNING
         VALUE(result) TYPE REF TO zif_adu_gos
