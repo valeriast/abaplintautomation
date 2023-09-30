@@ -10,7 +10,7 @@ CLASS zcl_adu_general DEFINITION
         VALUE(result) TYPE REF TO zcl_adu_general.
 
     METHODS constructor.
-
+ 
     METHODS get_structure_fields
       IMPORTING
         !structure_name        TYPE csequence OPTIONAL
