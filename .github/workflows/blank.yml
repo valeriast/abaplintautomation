@@ -12,8 +12,15 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 2
       - name: Process files changed in the current commit
+        id: changed-files
         run: |
           changedFiles=$(git diff --name-only HEAD^)
+          echo "{all_changed_files}={changedFiles}" >> $GITHUB_OUTPUT
           for file in $changedFiles; do
             echo "Processing file: $file"
+          done
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
           done
