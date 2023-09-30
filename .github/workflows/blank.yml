@@ -1,6 +1,6 @@
 name: CI
 
-on: [pull_request]
+on: [push]
 
 jobs:
   changedfiles:
@@ -18,9 +18,15 @@ jobs:
         # Set outputs using the command.
         run: |
           echo "all=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)" >> "$GITHUB_OUTPUT"
-      - name: abaplint
-        uses: valeriast/actions-abaplint@main
+
+  lint:
+    runs-on: ubuntu-latest
+        # require the first job to have ran
+    needs: changedfiles
+      # only run there are changed files
+      # if: ${{needs.changedfiles.outputs.ts}}
+    steps:
+      - name: echo changed files
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_SHA: ${{ github.event.pull_request.base.sha }}
-          CHANGEDFILES: ${{ steps.changes.outputs.all }}
+          ALL1: ${{needs.changedfiles.outputs.all}}
+          run: echo "$ALL1"
