@@ -1,13 +1,12 @@
 name: CI
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   changedfiles:
     runs-on: ubuntu-latest
     outputs:
      all: ${{steps.changes.outputs.all}}
-     ts: ${{steps.changes.outputs.ts}}
     steps:
         # Make sure we have some code to diff.
       - name: Checkout repository
@@ -19,9 +18,6 @@ jobs:
         # Set outputs using the command.
         run: |
           echo "all=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)" >> "$GITHUB_OUTPUT"
-          echo "ts=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs)" >> "$GITHUB_OUTPUT"
-          echo ${{steps.changes.outputs.all}}
-          echo ${{steps.changes.outputs.ts}}
   lint:
     runs-on: ubuntu-latest
     # require the first job to have ran
@@ -32,5 +28,4 @@ jobs:
       - name: echo changed files
         env:
           ALL1: ${{needs.changedfiles.outputs.all}}
-          TS1: ${{needs.changedfiles.outputs.ts}}
-        run: echo "$ALL1 $TS1"
+        run: echo "$ALL1"
