@@ -3,24 +3,17 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  changedfiles:
-    runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      all: ${{ steps.changes.outputs.all}}
-    steps:
-        # Make sure we have some code to diff.
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Get changed files
-        id: changes
-        # Set outputs using the command.
-        run: |
-          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
   lint:
-    runs-on: ubuntu-latest
-    # require the first job to have ran
-    needs: changedfiles
+    runs-on: [self-hosted, solinas]
     steps:
-      - name: echo changed files
-        run: echo ${{needs.changedfiles.outputs.all}}
+      - name: Checkout (fetch last two commits) of the PR
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 2
+      - name: Process files changed in the current commit
+        run: |
+          changedFiles=$(git diff --name-only HEAD^)
+          for file in $changedFiles; do
+            echo "Processing file: $file"
+          done
