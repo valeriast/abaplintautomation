@@ -20,3 +20,11 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file was changed"
           done
+      - name: abaplint
+        uses: valeriast/actions-abaplint@main
+      # GITHUB_TOKEN in forked repositories is read-only
+      # https://help.github.com/en/actions/reference/events-that-trigger-workflows#pull-request-event-pull_request
+      # if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANGEDFILES: ${{ steps.changed-files.outputs.all_changed_files }}
