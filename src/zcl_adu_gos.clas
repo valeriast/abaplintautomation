@@ -57,14 +57,14 @@ CLASS zcl_adu_gos IMPLEMENTATION.
 
   METHOD create_for_object.
 
-    result = NEW zcl_adu_gos( is_object ).
+    result = NEW zcl_adu_gos( is_object ) .
 
   ENDMETHOD.
 
 
   METHOD constructor.
-
-    ms_object = is_object.
+    
+    ms_object = is_object .
 
   ENDMETHOD.
 
@@ -74,7 +74,7 @@ CLASS zcl_adu_gos IMPLEMENTATION.
     IF it_files IS INITIAL.
       RETURN.
     ENDIF.
-
+    DATA: testet type i.
     DATA(lo_api) = get_api( ).
 
     DATA(lv_commit) = VALUE abap_bool( ).
