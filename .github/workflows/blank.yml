@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   changedfiles:
-    runs-on: [self-hosted, solinas]
+    runs-on: ubuntu-latest
     outputs:
      all: ${{steps.changes.outputs.all}}
      ts: ${{steps.changes.outputs.ts}}
@@ -23,7 +23,7 @@ jobs:
           echo ${{steps.changes.outputs.all}}
           echo ${{steps.changes.outputs.ts}}
   lint:
-    runs-on: [self-hosted, solinas]
+    runs-on: ubuntu-latest
     # require the first job to have ran
     needs: changedfiles
     # only run there are changed files
