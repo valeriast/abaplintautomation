@@ -11,7 +11,7 @@ CLASS zcl_adu_gos DEFINITION
       RETURNING
         VALUE(result) TYPE REF TO zif_adu_gos
       RAISING
-        cx_gos_api.
+        cx_gos_api  .
 
     METHODS constructor
       IMPORTING
