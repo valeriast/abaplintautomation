@@ -16,7 +16,7 @@ jobs:
       - name: Get changed files
         id: changes
         run: |
-          echo "all=$(git diff --name-only HEAD^ | xargs)" >> $GITHUB_OUTPUT
+          echo "all=$(git diff --name-only HEAD^ | xargs)" >> "$GITHUB_OUTPUT"
       - name: abaplint
         uses: valeriast/actions-abaplint@main
         env:
