@@ -21,12 +21,12 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-        # require the first job to have ran
+    # require the first job to have ran
     needs: changedfiles
-      # only run there are changed files
-      # if: ${{needs.changedfiles.outputs.ts}}
+    # only run there are changed files
+    # if: ${{needs.changedfiles.outputs.ts}}
     steps:
       - name: echo changed files
         env:
           ALL1: ${{needs.changedfiles.outputs.all}}
-          run: echo "$ALL1"
+        run: echo "$ALL1"
