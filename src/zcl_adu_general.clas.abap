@@ -27,10 +27,7 @@ CLASS zcl_adu_general DEFINITION
 
 ENDCLASS.
 
-
-
 CLASS zcl_adu_general IMPLEMENTATION.
-
 
   METHOD constructor.
     instance =   me.
@@ -42,7 +39,6 @@ CLASS zcl_adu_general IMPLEMENTATION.
     result = COND #( WHEN instance IS BOUND THEN instance ELSE NEW #( )   ).
 
   ENDMETHOD.
-
 
   METHOD get_structure_fields.
 
