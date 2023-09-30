@@ -11,6 +11,8 @@ CLASS zcl_adu_general DEFINITION
 
     METHODS constructor.
 
+    
+
     METHODS get_structure_fields
       IMPORTING
         !structure_name        TYPE csequence OPTIONAL
@@ -25,7 +27,7 @@ CLASS zcl_adu_general DEFINITION
     CLASS-DATA:
       instance TYPE REF TO zcl_adu_general.
 
-      
+
 
 ENDCLASS.
 
