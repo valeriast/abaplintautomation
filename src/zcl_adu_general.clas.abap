@@ -9,6 +9,7 @@ CLASS zcl_adu_general DEFINITION
       RETURNING
         VALUE(result) TYPE REF TO zcl_adu_general.
 
+
     METHODS constructor.
 
     METHODS get_structure_fields
