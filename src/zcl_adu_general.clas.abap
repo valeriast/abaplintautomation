@@ -23,6 +23,9 @@ CLASS zcl_adu_general DEFINITION
 
   PRIVATE SECTION.
     CLASS-DATA:
+
+
+    
       instance TYPE REF TO zcl_adu_general.
 
 ENDCLASS.
