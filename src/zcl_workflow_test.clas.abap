@@ -6,6 +6,8 @@ CLASS zcl_workflow_test DEFINITION
   PUBLIC SECTION.
     INTERFACES if_oo_adt_classrun.
   PROTECTED SECTION.
+
+
   PRIVATE SECTION.
 ENDCLASS.
 
