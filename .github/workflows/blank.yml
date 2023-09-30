@@ -3,26 +3,34 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    outputs:  
-       changed_files: ${{steps.changes.outputs.all_changed_files}}
+  changedfiles:
+    runs-on: [self-hosted, solinas]
+    outputs:
+     all: ${{steps.changes.outputs.all}}
+     ts: ${{steps.changes.outputs.ts}}
     steps:
-      - name: Checkout (fetch last two commits) of the PR
-        uses: actions/checkout@v3
+        # Make sure we have some code to diff.
+      - name: Checkout repository
+        uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 2
-      - name: Process files changed in the current commit
-        id: changed-files
+          fetch-depth: 0
+      - name: Get changed files
+        id: changes
+        # Set outputs using the command.
         run: |
-          changedFiles=$(git diff --name-only HEAD^)
-          echo "{all_changed_files}={changedFiles}" >> $GITHUB_OUTPUT
-          for file in $changedFiles; do
-            echo "Processing file: $file"
-          done
-      - name: List all changed files
-        run: |
-          for file in ${{ steps.changed-files.outputs.changed_files }}; do
-            echo "$file was changed"
-          done
+          echo "all=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)" >> "$GITHUB_OUTPUT"
+          echo "ts=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs)" >> "$GITHUB_OUTPUT"
+          echo ${{steps.changes.outputs.all}}
+          echo ${{steps.changes.outputs.ts}}
+  lint:
+    runs-on: [self-hosted, solinas]
+    # require the first job to have ran
+    needs: changedfiles
+    # only run there are changed files
+    # if: ${{needs.changedfiles.outputs.ts}}
+    steps:
+      - name: echo changed files
+        env:
+          ALL1: ${{needs.changedfiles.outputs.all}}
+          TS1: ${{needs.changedfiles.outputs.ts}}
+        run: echo "$ALL1 $TS1"
