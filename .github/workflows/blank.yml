@@ -13,6 +13,6 @@ jobs:
  
       - name: List all changed files
         run: |
-          for file in ${{ CHANGED_FILES }}; do
+          for file in $CHANGED_FILES; do
             echo "$file was changed"
           done
