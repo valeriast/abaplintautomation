@@ -33,13 +33,13 @@ CLASS zcl_adu_general IMPLEMENTATION.
 
 
   METHOD constructor.
-    instance = me.
+    instance =   me.
   ENDMETHOD.
 
 
   METHOD get_instance.
 
-    result = COND #( WHEN instance IS BOUND THEN instance ELSE NEW #( ) ).
+    result = COND #( WHEN instance IS BOUND THEN instance ELSE NEW #( )   ).
 
   ENDMETHOD.
 
