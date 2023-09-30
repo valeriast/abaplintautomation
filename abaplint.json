@@ -29,6 +29,10 @@
     "description_empty": {
       "exclude": [],
       "severity": "Error"
-    }
+    },
+    "unused_types": {
+      "exclude": [],
+      "severity": "Error",
+      "skipNames": []
   }
 }
