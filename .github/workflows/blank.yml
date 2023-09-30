@@ -19,15 +19,8 @@ jobs:
         # Set outputs using the command.
         run: |
           echo "all=$(git diff --name-only HEAD^)" >> "$GITHUB_OUTPUT"
-
-  lint:
-    runs-on: ubuntu-latest
-    # require the first job to have ran
-    needs: changedfiles
-    # only run there are changed files
-    # if: ${{needs.changedfiles.outputs.ts}}
-    steps:
-      - name: echo changed files
+      - name: abaplint
+        uses: valeriast/actions-abaplint@main
         env:
-          ALL1: ${{needs.changedfiles.outputs.all}}
-        run: echo "$ALL1"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANGEDFILES: ${{ needs.changedfiles.outputs.all }}
