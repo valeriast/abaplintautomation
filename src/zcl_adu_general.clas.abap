@@ -25,6 +25,8 @@ CLASS zcl_adu_general DEFINITION
     CLASS-DATA:
       instance TYPE REF TO zcl_adu_general.
 
+      
+
 ENDCLASS.
 
 
