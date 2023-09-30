@@ -3,21 +3,26 @@ name: CI
 on: [pull_request]
 
 jobs:
-  build:
+  changedfiles:
     runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      all: ${{ steps.changes.outputs.all}}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: ${{ github.event_name == 'pull_request' && 2 || 0 }}
+        # Make sure we have some code to diff.
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Get changed files
-        id: changed-files
+        id: changes
+        # Set outputs using the command.
         run: |
-          if ${{ github.event_name == 'pull_request' }}; then
-            echo "changed_files=$(git diff --name-only -r HEAD^1 HEAD | xargs)" >> $GITHUB_OUTPUT
-          else
-            echo "changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | xargs)" >> $GITHUB_OUTPUT
-      - name: List changed files
-        run: |
-          for file in ${{ steps.changed-files.outputs.changed_files }}; do
-            echo "$file was changed"
-          done
+          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
+  lint:
+    runs-on: ubuntu-latest
+    # require the first job to have ran
+    needs: changedfiles
+    # only run there are changed files
+    if: ${{needs.changedfiles.outputs.all}}
+    steps:
+      - name: echo changed files
+        run: echo ${{needs.changedfiles.outputs.all}}
