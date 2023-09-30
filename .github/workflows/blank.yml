@@ -5,6 +5,8 @@ on: [push, pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
+    outputs:  
+       changed_files: ${{steps.changes.outputs.all_changed_files}}
     steps:
       - name: Checkout (fetch last two commits) of the PR
         uses: actions/checkout@v3
@@ -21,6 +23,6 @@ jobs:
           done
       - name: List all changed files
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          for file in ${{ steps.changed-files.outputs.changed_files }}; do
             echo "$file was changed"
           done
