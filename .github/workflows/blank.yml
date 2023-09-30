@@ -1,6 +1,6 @@
 name: CI
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   changedfiles:
@@ -21,8 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     # require the first job to have ran
     needs: changedfiles
-    # only run there are changed files
-    if: ${{needs.changedfiles.outputs.all}}
     steps:
       - name: echo changed files
         run: echo ${{needs.changedfiles.outputs.all}}
