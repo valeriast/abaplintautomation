@@ -27,7 +27,7 @@ jobs:
         run: |
           {
             echo 'all<<EOF'
-            echo $(git diff --name-only main..${{steps.getdiff.outputs.current}})
+            echo $(git diff --name-only main..${{steps.getdiff.outputs.current}} --)
             echo EOF
           } >> "$GITHUB_OUTPUT"
       - name: abaplint
