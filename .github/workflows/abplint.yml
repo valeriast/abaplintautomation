@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout (fetch last two commits) of the PR
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Get Current Branch name
         id: getbranchname
         run: |
