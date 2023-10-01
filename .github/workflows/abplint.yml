@@ -1,6 +1,6 @@
 name: Abaplint
 
-on: [pull_request]
+on: [pull_request, push]
 
 jobs:
   workflow:
@@ -16,6 +16,7 @@ jobs:
       - name: Get changed files
         id: changes
         run: |
+          git fetch origin main:refs/remotes/origin/main
           {
             echo 'all<<EOF'
             echo $(git log --name-only --pretty=format: --stat main..$current_branch)
