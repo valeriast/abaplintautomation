@@ -26,9 +26,6 @@ CLASS zcl_adu_general DEFINITION
       instance TYPE REF TO zcl_adu_general.
 
 ENDCLASS.
-
-
-
 CLASS zcl_adu_general IMPLEMENTATION.
 
 
