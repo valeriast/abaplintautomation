@@ -3,21 +3,26 @@ name: Abaplint
 on: [push]
 
 jobs:
-  build:
+  workflow:
     runs-on: ubuntu-latest
-    name: Workflow
-    
+    outputs:
+     all: ${{steps.changes.outputs.all}}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout (fetch last two commits) of the PR
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 10
       - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v14.6
-
-      - name: Abaplint action
+        id: changes
+        run: |
+          {
+            echo 'all<<EOF'
+            echo $(git diff --name-only HEAD^)
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+      - name: abaplint
         uses: valeriast/actions-abaplint@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CHANGEDFILES: ${{ steps.changed-files.outputs.all_changed_files }}
+          CHANGEDFILES: ${{ steps.changes.outputs.all }}
