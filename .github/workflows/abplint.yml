@@ -5,22 +5,23 @@ on: [push]
 jobs:
   workflow:
     runs-on: ubuntu-latest
-    outputs:
-     all: ${{steps.changes.outputs.all}}
     steps:
-      - name: Checkout (fetch last two commits) of the PR
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: ${{ github.event.pull_request.commits }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get current branch name
+        id: branch_name
+        run: echo "current_branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+
       - name: Get changed files
         id: changes
         run: |
           {
             echo 'all<<EOF'
-            echo $(git diff --name-only HEAD^)
+            echo $(git log --name-only --pretty=format: --stat main..$current_branch)
             echo EOF
           } >> "$GITHUB_OUTPUT"
+
       - name: abaplint
         uses: valeriast/actions-abaplint@main
         env:
