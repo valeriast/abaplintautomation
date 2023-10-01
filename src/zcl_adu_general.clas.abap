@@ -22,7 +22,7 @@ CLASS zcl_adu_general DEFINITION
   PROTECTED SECTION.
 
   PRIVATE SECTION.
-    CLASS-DATA:
+    CLASS-DATA
       instance TYPE REF TO zcl_adu_general.
 
 ENDCLASS.
