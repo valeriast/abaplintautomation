@@ -51,7 +51,6 @@ CLASS zcl_adu_gos DEFINITION
 ENDCLASS.
 
 
-
 CLASS zcl_adu_gos IMPLEMENTATION.
 
 
