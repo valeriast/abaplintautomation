@@ -9,11 +9,11 @@ jobs:
      all: ${{steps.changes.outputs.all}}
      current: ${{steps.getbranchname.outputs.current}}
     steps:
-      - name: Checkout (fetch last two commits) of the PR
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 2
+          fetch-depth: 0
       - name: Get Current Branch name
         id: getbranchname
         run: |
