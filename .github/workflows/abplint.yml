@@ -18,7 +18,7 @@ jobs:
         run: |
           {
             echo 'all<<EOF'
-            echo $(git diff --name-only $(git branch --show-current)..origin/main --)
+            echo $(git diff --name-only ${git branch --show-current}..origin/main --)
             echo EOF
           } >> "$GITHUB_OUTPUT"
       - name: abaplint
