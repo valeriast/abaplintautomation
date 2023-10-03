@@ -58,8 +58,6 @@ CLASS zcl_adu_gos IMPLEMENTATION.
     result = NEW zcl_adu_gos( is_object ).
 
   ENDMETHOD.
-
-
   METHOD constructor.
 
     ms_object = is_object.
