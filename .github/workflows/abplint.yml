@@ -40,7 +40,7 @@ jobs:
             echo EOF
           } >> "$GITHUB_OUTPUT"
       - name: abaplint
-        uses: valeriast/actions-abaplint@main
+        uses: valeriast/actions-abaplin-v2t@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHANGEDFILES: ${{ steps.changes.outputs.changedfiles }}
