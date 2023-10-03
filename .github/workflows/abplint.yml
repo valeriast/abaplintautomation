@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
      all: ${{steps.changes.outputs.all}}
+     changedfiles: ${{steps.changes.outputs.changedfiles}}
      current: ${{steps.getbranchname.outputs.current}}
     steps:
       - name: Checkout
@@ -22,11 +23,19 @@ jobs:
             echo $(git branch --show-current)
             echo EOF
           } >> "$GITHUB_OUTPUT"
+      - name: Get all files
+        id: all_files
+        run: |
+          {
+            echo 'all<<EOF'
+            echo $(git ls-tree --name-only -r main)
+            echo EOF
+          } >> "$GITHUB_OUTPUT"    
       - name: Get changed files
         id: changes
         run: |
           {
-            echo 'all<<EOF'
+            echo 'changedfiles<<EOF'
             echo $(git diff --name-only ${{steps.getbranchname.outputs.current}}..origin/main --)
             echo EOF
           } >> "$GITHUB_OUTPUT"
@@ -34,4 +43,6 @@ jobs:
         uses: valeriast/actions-abaplint@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CHANGEDFILES: ${{ steps.changes.outputs.all }}
+          CHANGEDFILES: ${{ steps.changes.outputs.changedfiles }}
+          ALLFILES: ${{ steps.all_files.outputs.all }}
+          
