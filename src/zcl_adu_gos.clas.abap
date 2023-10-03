@@ -66,7 +66,6 @@ CLASS zcl_adu_gos IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD zif_adu_gos~attach.
 
     IF it_files IS INITIAL.
