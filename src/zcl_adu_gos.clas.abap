@@ -59,7 +59,6 @@ CLASS zcl_adu_gos IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD constructor.
 
     ms_object = is_object.
