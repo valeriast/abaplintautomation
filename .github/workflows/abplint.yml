@@ -28,7 +28,7 @@ jobs:
         run: |
           {
             echo 'all<<EOF'
-            echo $(git ls-tree --name-only -r master)
+            echo $(git ls-tree --name-only -r main)
             echo EOF
           } >> "$GITHUB_OUTPUT"    
       - name: Get changed files
@@ -36,7 +36,7 @@ jobs:
         run: |
           {
             echo 'changedfiles<<EOF'
-            echo $(git diff --name-only ${{steps.getbranchname.outputs.current}}..origin/master --)
+            echo $(git diff --name-only ${{steps.getbranchname.outputs.current}}..origin/main --)
             echo EOF
           } >> "$GITHUB_OUTPUT"
       - name: abaplint
