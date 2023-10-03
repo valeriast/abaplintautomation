@@ -28,7 +28,7 @@ jobs:
         run: |
           {
             echo 'all<<EOF'
-            echo $(git ls-tree --name-only -r main)
+            echo $(git ls-tree --name-only -r master)
             echo EOF
           } >> "$GITHUB_OUTPUT"    
       - name: Get changed files
