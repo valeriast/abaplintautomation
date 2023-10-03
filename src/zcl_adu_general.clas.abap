@@ -28,8 +28,6 @@ CLASS zcl_adu_general DEFINITION
 ENDCLASS.
 
 CLASS zcl_adu_general IMPLEMENTATION.
-
-
   METHOD constructor.
     instance =   me.
   ENDMETHOD.
