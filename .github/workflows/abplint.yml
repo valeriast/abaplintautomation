@@ -24,7 +24,6 @@ jobs:
           {
             echo 'all<<EOF'
             echo "job ids - ${{ toJSON(fromJSON(steps.fetch.outputs.data).jobs.*.id) }}
-            echo EOF
           } >> "$GITHUB_OUTPUT"    
       - name: List run ids
         run: |
