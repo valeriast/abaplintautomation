@@ -6,6 +6,8 @@ jobs:
   setup:
     name: Get check run ids from action run id
     runs-on: ubuntu-latest
+    outputs:
+      all: ${{steps.changes.outputs.all}}
     steps:
       - name: Fetch check run ids
         id: fetch
@@ -17,4 +19,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo check run ids
-        run: echo "job ids - ${{ toJSON(fromJSON(steps.fetch.outputs.data).jobs.*.id) }}
+        id: checkrunid
+        run: |
+          {
+            echo 'all<<EOF'
+            echo "job ids - ${{ toJSON(fromJSON(steps.fetch.outputs.data).jobs.*.id) }}
+            echo EOF
+          } >> "$GITHUB_OUTPUT"    
+      - name: List run ids
+        run: |
+          for id in ${{steps.checkrunid.all}}; do
+            echo $id
+          done
+        
