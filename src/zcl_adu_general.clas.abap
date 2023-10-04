@@ -2,7 +2,6 @@ CLASS zcl_adu_general DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
-
   PUBLIC SECTION.
 
     CLASS-METHODS get_instance
