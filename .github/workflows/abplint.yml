@@ -20,7 +20,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo check run ids
         id: checkrunid
-        run: echo "job ids - ${{ toJSON(fromJSON(steps.fetch.outputs.data).jobs.*.id) }}
+        run: echo ${{steps.fetch.outputs.data}}
 
       - name: List run ids
         run: |
