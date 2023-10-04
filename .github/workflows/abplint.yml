@@ -20,11 +20,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo check run ids
         id: checkrunid
-        run: |
-          {
-            echo 'all<<EOF'
-            echo "job ids - ${{ toJSON(fromJSON(steps.fetch.outputs.data).jobs.*.id) }}
-          } >> "$GITHUB_OUTPUT"    
+        run: echo "job ids - ${{ toJSON(fromJSON(steps.fetch.outputs.data).jobs.*.id) }}
+
       - name: List run ids
         run: |
           for id in ${{steps.checkrunid.all}}; do
