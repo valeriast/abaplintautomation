@@ -3,46 +3,18 @@ name: Abaplint
 on: [push]
 
 jobs:
-  workflow:
+  setup:
+    name: Get check run ids from action run id
     runs-on: ubuntu-latest
-    outputs:
-     all: ${{steps.changes.outputs.all}}
-     changedfiles: ${{steps.changes.outputs.changedfiles}}
-     current: ${{steps.getbranchname.outputs.current}}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Fetch check run ids
+        id: fetch
+        uses: octokit/request-action@v2.x
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-      - name: Get Current Branch name
-        id: getbranchname
-        run: |
-          {
-            echo 'current<<EOF'
-            echo $(git branch --show-current)
-            echo EOF
-          } >> "$GITHUB_OUTPUT"
-      - name: Get all files
-        id: all_files
-        run: |
-          {
-            echo 'all<<EOF'
-            echo $(git ls-tree --name-only -r origin/main --)
-            echo EOF
-          } >> "$GITHUB_OUTPUT"    
-      - name: Get changed files
-        id: changes
-        run: |
-          {
-            echo 'changedfiles<<EOF'
-            echo $(git diff --name-only ${{steps.getbranchname.outputs.current}}..origin/main --)
-            echo EOF
-          } >> "$GITHUB_OUTPUT"
-      - name: abaplint
-        uses: valeriast/actions-abaplint-v2@main
+          route: GET /repos/{repo}/actions/runs/{run_id}/jobs
+          repo: ${{ github.repository }}
+          run_id: ${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CHANGEDFILES: ${{ steps.changes.outputs.changedfiles }}
-          ALLFILES: ${{ steps.all_files.outputs.all }}
-          
+      - name: Echo check run ids
+        run: echo "job ids - ${{ toJSON(fromJSON(steps.fetch.outputs.data).jobs.*.id) }}
