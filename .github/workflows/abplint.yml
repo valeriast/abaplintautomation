@@ -20,10 +20,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo check run ids
         id: checkrunid
-        run: |
-          {
-            echo 'all<<EOF'
-            echo ${{steps.fetch.outputs.data}}
-            echo EOF
-          } >> "$GITHUB_OUTPUT"    
+        run: echo = "all=${{steps.fetch.outputs.data}}" >> "$GITHUB_OUTPUT" 
         
