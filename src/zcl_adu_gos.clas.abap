@@ -3,7 +3,6 @@ CLASS zcl_adu_gos DEFINITION
   CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES zif_adu_gos ALL METHODS FINAL.
-
     CLASS-METHODS create_for_object
       IMPORTING
         is_object     TYPE gos_s_obj
