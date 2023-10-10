@@ -29,6 +29,5 @@ CLASS ZCL_WORKFLOW_TEST IMPLEMENTATION.
       CATCH cx_swf_cpwf_api INTO DATA(cx_wf_api).
         out->write( cx_wf_api->get_text(  ) ).
     ENDTRY.
-    
   ENDMETHOD.
 ENDCLASS.
