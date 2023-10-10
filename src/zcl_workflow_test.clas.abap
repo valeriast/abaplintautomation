@@ -29,20 +29,6 @@ CLASS ZCL_WORKFLOW_TEST IMPLEMENTATION.
       CATCH cx_swf_cpwf_api INTO DATA(cx_wf_api).
         out->write( cx_wf_api->get_text(  ) ).
     ENDTRY.
-
-*
-*    DATA(ls_context) = VALUE ty_context(
-*      some_property = 'someValue'
-*    ).
-*    DATA(lv_context_json) = lo_cpwf_api->get_start_context_from_data(
-*      iv_data = ls_context
-*    ).
-*
-*    DATA(lv_cpwf_handle) = lo_cpwf_api->start_workflow(
-*      iv_cp_workflow_def_id = 'myprocess'
-*      iv_context            = lv_context_json
-*      iv_retention_time     = 30
-*      iv_callback_class     = 'ZCL_SWF_CPWF_CALLBACK'
-*    ).
+    
   ENDMETHOD.
 ENDCLASS.
