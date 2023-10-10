@@ -2,12 +2,11 @@ name: Abaplint
 
 on: [push]
 
-jobs:       
+jobs:
   workflow:
     runs-on: ubuntu-latest
     outputs:
      all: ${{steps.changes.outputs.all}}
-     changedfiles: ${{steps.changes.outputs.changedfiles}}
      current: ${{steps.getbranchname.outputs.current}}
     steps:
       - name: Checkout
@@ -27,23 +26,12 @@ jobs:
         id: changes
         run: |
           {
-            echo 'changedfiles<<EOF'
+            echo 'all<<EOF'
             echo $(git diff --name-only ${{steps.getbranchname.outputs.current}}..origin/main --)
             echo EOF
           } >> "$GITHUB_OUTPUT"
-      - name: Fetch check run ids
-        id: fetchcheckrun
-        uses: octokit/request-action@v2.x
-        with:
-          route: GET /repos/{repo}/actions/runs/{run_id}/jobs
-          repo: ${{ github.repository }}
-          run_id: ${{ github.run_id }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: abaplint
-        uses: valeriast/actions-abaplint-v2@main
+        uses: valeriast/actions-abaplint@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CHANGEDFILES: ${{ steps.changes.outputs.changedfiles }}
-          GITHUB_CHECK_RUN_ID: ${{steps.fetchcheckrun.outputs.data}}
-        
+          CHANGEDFILES: ${{ steps.changes.outputs.all }}
